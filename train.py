@@ -86,7 +86,15 @@ def get_env(args: Args, record_dir: Optional[Path] = None):
         ),
     )
     if record_dir is not None:
-        env = robopianist_wrappers.PianoSoundVideoWrapper(
+        # PianoSoundVideoWrapper can fail with record_every > 1 because it tries
+        # to post-process MP4 files that are not emitted on skipped episodes.
+        # Fall back to the base video wrapper in that case.
+        video_wrapper = (
+            robopianist_wrappers.PianoSoundVideoWrapper
+            if args.record_every == 1
+            else wrappers.DmControlVideoWrapper
+        )
+        env = video_wrapper(
             environment=env,
             record_dir=record_dir,
             record_every=args.record_every,
@@ -196,8 +204,15 @@ def main(args: Args) -> None:
             log_dict = prefix_dict("eval", eval_env.get_statistics())
             music_dict = prefix_dict("eval", eval_env.get_musical_metrics())
             wandb.log(log_dict | music_dict, step=i)
-            video = wandb.Video(str(eval_env.latest_filename), fps=4, format="mp4")
-            wandb.log({"video": video, "global_step": i})
+            try:
+                latest_video = eval_env.latest_filename
+            except ValueError:
+                latest_video = None
+
+            if latest_video is not None and latest_video.exists():
+                video = wandb.Video(str(latest_video), fps=4, format="mp4")
+                wandb.log({"video": video, "global_step": i})
+                latest_video.unlink()
 
         if i % args.log_interval == 0:
             wandb.log({"train/fps": int(i / (time.time() - start_time))}, step=i)

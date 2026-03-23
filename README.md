@@ -7,6 +7,7 @@ Reinforcement learning code for [RoboPianist](https://github.com/google-research
 Note: Make sure you are using the same conda environment you created for RoboPianist (see [here](https://github.com/google-research/robopianist/blob/main/README.md#installation)).
 
 1. Install [JAX](https://github.com/google/jax#installation)
+- For us  this is pip install -U "jax[cuda12]"
 2. Run `pip install -r requirements.txt`
 
 ## Usage

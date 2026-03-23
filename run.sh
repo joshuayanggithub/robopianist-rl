@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WANDB_DIR=/tmp/robopianist/ MUJOCO_GL=egl XLA_PYTHON_CLIENT_PREALLOCATE=false CUDA_VISIBLE_DEVICES=0 MUJOCO_EGL_DEVICE_ID=0 python train.py \
+WANDB_DIR=/tmp/robopianist/ SDL_AUDIODRIVER=dummy MUJOCO_GL=egl XLA_PYTHON_CLIENT_PREALLOCATE=false CUDA_VISIBLE_DEVICES=0 MUJOCO_EGL_DEVICE_ID=0 python train.py \
     --root-dir /tmp/robopianist/rl/ \
     --warmstart-steps 5000 \
     --max-steps 5000000 \
@@ -17,6 +17,7 @@ WANDB_DIR=/tmp/robopianist/ MUJOCO_GL=egl XLA_PYTHON_CLIENT_PREALLOCATE=false CU
     --action-reward-observation \
     --primitive-fingertip-collisions \
     --eval-episodes 1 \
+    --entity "16831-spring26" \
     --record-every 25 \
     --camera-id "piano/back" \
     --mode online \
