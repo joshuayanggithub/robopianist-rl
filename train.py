@@ -198,7 +198,6 @@ def main(args: Args) -> None:
             wandb.log(log_dict | music_dict, step=i)
             video = wandb.Video(str(eval_env.latest_filename), fps=4, format="mp4")
             wandb.log({"video": video, "global_step": i})
-            eval_env.latest_filename.unlink()
 
         if i % args.log_interval == 0:
             wandb.log({"train/fps": int(i / (time.time() - start_time))}, step=i)

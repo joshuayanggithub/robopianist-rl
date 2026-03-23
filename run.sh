@@ -17,5 +17,7 @@ WANDB_DIR=/tmp/robopianist/ MUJOCO_GL=egl XLA_PYTHON_CLIENT_PREALLOCATE=false CU
     --action-reward-observation \
     --primitive-fingertip-collisions \
     --eval-episodes 1 \
+    --record-every 25 \
     --camera-id "piano/back" \
+    --mode online \
     --tqdm-bar

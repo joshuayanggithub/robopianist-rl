@@ -1,11 +1,11 @@
-from typing import Any, Callable, Optional, Sequence, TypeAlias
+from typing import Any, Callable, Optional, Sequence
 
 import flax.linen as nn
 import jax
 import jax.numpy as jnp
 
 Params = Any
-PRNGKey: TypeAlias = jax.random.KeyArray
+PRNGKey = Any
 
 default_init = nn.initializers.xavier_uniform
 
