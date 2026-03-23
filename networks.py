@@ -5,7 +5,7 @@ import jax
 import jax.numpy as jnp
 
 Params = Any
-PRNGKey: TypeAlias = jax.random.KeyArray
+PRNGKey: TypeAlias = jax.Array
 
 default_init = nn.initializers.xavier_uniform
 
